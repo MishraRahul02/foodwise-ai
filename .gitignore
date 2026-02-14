@@ -1,24 +1,24 @@
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
 
 # Virtual Environment
 venv/
-.env
+.env/
 
 # Django
 db.sqlite3
 media/
 
-# ML / Data
+# ML / data
 ml_data.csv
 models/*.pkl
-
-# VS Code
-.vscode/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# VS Code
+.vscode/
