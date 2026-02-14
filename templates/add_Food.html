@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Today's planned Food</h2>
+
+    <form method="POST" class="food-form">
+        {% csrf_token %}
+
+        <div class="food-row">
+            <label>Dal</label>
+            <input type="text" name="dal_qty" placeholder="e.g. 5 plates">
+        </div>
+
+        <div class="food-row">
+            <label>Chawal</label>
+            <input type="text" name="chawal_qty" placeholder="e.g. 5 plates">
+        </div>
+
+        <div class="food-row">
+            <label>Sabji</label>
+            <input type="text" name="sabji_qty" placeholder="e.g. 6 plates">
+        </div>
+
+        <button type="submit">Submit Food</button>
+    </form>
+
+</div>
+
+{% endblock %}

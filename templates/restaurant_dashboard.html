@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- ================= WELCOME SECTION ================= -->
+    <div class="mb-4">
+        <h2 class="dashboard-title">
+            Welcome, {{ user.username }} 👋
+        </h2>
+        <p class="text-muted">
+            Plan food smartly, reduce waste, and help others.
+        </p>
+    </div>
+
+    <!-- ================= ACTION CARDS (3 MAIN FEATURES) ================= -->
+    <div class="row g-4 align-items-stretch">
+
+        <!-- ---------- MORNING FOOD PLAN CARD ---------- -->
+        <div class="col-md-4 d-flex">
+            <div class="card p-4 text-center h-100 w-100 d-flex flex-column">
+                <h4 class="mb-3">🌞 Morning Food Plan</h4>
+
+                <!-- Show today's planned food if exists -->
+                {% if planned %}
+                    <p class="text-success fw-semibold">
+                        Today: Dal {{ planned.dal }}, 
+                        Chawal {{ planned.chawal }}, 
+                        Sabji {{ planned.sabji }}
+                    </p>
+                {% else %}
+                    <p class="text-danger fw-semibold">
+                        Today: Not added yet
+                    </p>
+                {% endif %}
+
+                <p class="text-muted flex-grow-1">
+                    Enter today’s food preparation details.
+                </p>
+
+                <!-- Redirect to Add Food page -->
+                <a href="{% url 'add_food' %}" class="btn btn-success mt-2">
+                    Add Food Plan
+                </a>
+            </div>
+        </div>
+
+        <!-- ---------- END OF DAY (CLOSE DAY) CARD ---------- -->
+        <div class="col-md-4 d-flex">
+            <div class="card p-4 text-center h-100 w-100 d-flex flex-column">
+                <h4 class="mb-3">🌙 End of Day</h4>
+
+                <!-- Show today's sold food if close day done -->
+                {% if closed %}
+                    <p class="text-success fw-semibold">
+                        Today Sold: Dal {{ closed.sold_dal }}, 
+                        Chawal {{ closed.sold_chawal }}, 
+                        Sabji {{ closed.sold_sabji }}
+                    </p>
+                {% else %}
+                    <p class="text-danger fw-semibold">
+                        Today: Close day pending
+                    </p>
+                {% endif %}
+
+                <p class="text-muted flex-grow-1">
+                    Submit sold food details.
+                </p>
+
+                <!-- Redirect to Close Day page -->
+                <a href="{% url 'close_day' %}" class="btn btn-warning mt-2">
+                    Close Day
+                </a>
+            </div>
+        </div>
+
+        <!-- ---------- PREDICTION CARD ---------- -->
+        <div class="col-md-4 d-flex">
+            <div class="card p-4 text-center h-100 w-100 d-flex flex-column">
+                <h4 class="mb-3">🔮 Predict Tomorrow</h4>
+
+                <p class="text-muted flex-grow-1">
+                    Get AI-based food quantity suggestion.
+                </p>
+
+                <!-- Redirect to prediction page -->
+                <a href="{% url 'predict_page' %}" class="btn btn-primary mt-2">
+                    Predict Tomorrow
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= FOOD REQUESTS SECTION ================= -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4>📩 Food Requests</h4>
+
+        <!-- Show Delete All button only if requests exist -->
+        {% if requests %}
+            <a href="{% url 'delete_all_requests' %}"
+               class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('Delete all requests? This cannot be undone!')">
+                🗑️ Delete All
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- ---------- LIST OF REQUESTS ---------- -->
+    {% if requests %}
+        {% for req in requests %}
+            <div class="card p-2 mb-2 mt-2">
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <!-- Requester Info -->
+                    <div>
+                        <strong>{{ req.requester_name }}</strong>
+                        ({{ req.requester_phone }})
+
+                        <!-- Status Badge -->
+                        {% if req.status == "pending" %}
+                            <span class="badge bg-warning ms-2">Pending</span>
+                        {% elif req.status == "accepted" %}
+                            <span class="badge bg-success ms-2">Accepted</span>
+                        {% elif req.status == "rejected" %}
+                            <span class="badge bg-danger ms-2">Rejected</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2">
+
+                        <!-- Accept / Reject only when pending -->
+                        {% if req.status == "pending" %}
+                            <a href="{% url 'accept_request' req.id %}" 
+                               class="btn btn-sm btn-success">
+                                Accept
+                            </a>
+
+                            <a href="{% url 'reject_request' req.id %}" 
+                               class="btn btn-sm btn-danger">
+                                Reject
+                            </a>
+                        {% endif %}
+
+                        <!-- Delete button always visible -->
+                        <a href="{% url 'delete_request' req.id %}" 
+                           class="btn btn-sm btn-outline-secondary"
+                           onclick="return confirm('Delete this request?')">
+                            Delete
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <!-- No requests case -->
+        <p class="text-muted mt-2">No food requests yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

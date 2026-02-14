@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4 text-center text-danger">
+        🔒 Close Day – Food Summary
+    </h2>
+
+    <form method="POST" class="food-form close-form">
+        {% csrf_token %}
+
+        <!-- SOLD FOOD -->
+        <h4 class="text-success mb-3">Sold Food</h4>
+
+        <div class="food-row">
+            <label>Dal (Sold)</label>
+            <input type="text" name="sold_dal" placeholder="e.g. 5 plates">
+        </div>
+
+        <div class="food-row">
+            <label>Chawal (Sold)</label>
+            <input type="text" name="sold_chawal" placeholder="e.g. 5 plates">
+        </div>
+
+        <div class="food-row">
+            <label>Sabji (Sold)</label>
+            <input type="text" name="sold_sabji" placeholder="e.g. 6 plates">
+        </div>
+
+        <hr class="my-4">
+
+        <button type="submit" class="btn btn-danger w-100 mt-3">
+            Close Day
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

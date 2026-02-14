@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="card p-4 shadow-sm">
+            {% csrf_token %}
+
+        <h4 class="mb-3">🍽️ Request Food from {{ restaurant.username }}</h4>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Your Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input type="text" name="phone" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+                Send Request
+            </button>
+        </form>
+
+        <a href="{% url 'home' %}" class="btn btn-link mt-3">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}

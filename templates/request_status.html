@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h3>📩 Your Food Request Status</h3>
+
+    {% if req.status == "accepted" %}
+        <div class="alert alert-success mt-3">
+            ✅ Your request has been accepted!  
+            Please come between <strong>9 PM – 1 AM</strong>.
+        </div>
+    {% elif req.status == "rejected" %}
+        <div class="alert alert-danger mt-3">
+            ❌ Sorry, your request was rejected by the restaurant.
+        </div>
+    {% else %}
+        <div class="alert alert-warning mt-3">
+            ⏳ Your request is still pending. Please wait.
+        </div>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>🔮 Tomorrow’s Food Prediction</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-primary">
+    Predict Using Today’s Data
+  </button>
+</form>
+
+{% if dal_pred is not None %}
+  <div class="mt-3">
+    <p><strong>Dal to cook:</strong> {{ dal_pred }}</p>
+    <p><strong>Chawal to cook:</strong> {{ chawal_pred }}</p>
+    <p><strong>Sabji to cook:</strong> {{ sabji_pred }}</p>
+  </div>
+{% else %}
+  <p class="text-muted mt-3">
+    Click the button to generate prediction.
+  </p>
+{% endif %}
+
+<a href="{% url 'restaurant_dashboard' %}" class="btn btn-secondary mt-3">
+  Back to Dashboard
+</a>
+<p class="text-muted mt-2">
+  Note: Predictions will improve as more daily data is added.
+</p>
+
+
+
+
+{% endblock %}
