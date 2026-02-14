@@ -1,5 +1,3 @@
-# foodwise-ai
-AI-powered web platform to predict food demand, reduce food waste, and enable food donation using Django and Machine Learning.
 # FoodWise AI 🍽️🌱
 
 FoodWise AI is a Django + Machine Learning based web application to reduce food waste in restaurants.
